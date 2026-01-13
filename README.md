@@ -1,1 +1,0 @@
-# pnd-rdestrat.pandata.de git init git add index.html git commit -m first commit git branch -M main git remote add origin git@github.com:pnd-rdestratis/pnd-rdestrat.pandata.de.git git push -u origin main
