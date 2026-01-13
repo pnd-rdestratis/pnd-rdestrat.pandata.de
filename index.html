@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eloqua - Voice AI Platform Wireframes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #16161f;
+            --border: #2a2a3a;
+            --border-light: #3a3a4a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #9898a8;
+            --text-muted: #686878;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Lucide icons */
+        .icon { width: 20px; height: 20px; stroke-width: 1.75; }
+        .icon-sm { width: 16px; height: 16px; }
+        .icon-lg { width: 24px; height: 24px; }
+        .icon-xl { width: 32px; height: 32px; }
+        
+        /* Navigation */
+        .wireframe-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10,10,15,0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 16px 32px;
+            display: flex; align-items: center; gap: 32px;
+        }
+        .wireframe-nav h1 { font-size: 14px; color: var(--accent); font-weight: 600; }
+        .wireframe-nav a {
+            color: var(--text-secondary); text-decoration: none; font-size: 13px;
+            padding: 8px 16px; border-radius: 8px; transition: all 0.2s;
+        }
+        .wireframe-nav a:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+        .wireframe-nav a.active { color: var(--text-primary); background: var(--bg-tertiary); }
+        
+        /* Screen Container */
+        .screens { padding: 80px 32px 32px; display: flex; flex-direction: column; gap: 64px; }
+        .screen { 
+            background: var(--bg-secondary); border-radius: 16px; 
+            border: 1px solid var(--border); overflow: hidden;
+        }
+        .screen-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .screen-title { font-size: 18px; font-weight: 600; }
+        .screen-badge { 
+            font-size: 11px; padding: 4px 12px; border-radius: 20px;
+            background: var(--bg-tertiary); color: var(--text-secondary);
+        }
+        .screen-content { min-height: 600px; display: flex; }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px; background: var(--bg-card); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+        }
+        .sidebar-logo {
+            padding: 24px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .logo-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--gradient-1); display: flex; align-items: center; justify-content: center;
+            color: white;
+        }
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        .sidebar-section { padding: 16px 12px; }
+        .sidebar-label { 
+            font-size: 11px; font-weight: 600; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 1px; padding: 8px 12px;
+        }
+        .sidebar-item {
+            display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
+            color: var(--text-secondary); font-size: 14px;
+        }
+        .sidebar-item:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .sidebar-item.active { background: var(--accent); color: white; }
+        .sidebar-item .icon { opacity: 0.7; }
+        .sidebar-item.active .icon { opacity: 1; }
+        .sidebar-footer {
+            margin-top: auto; padding: 16px; border-top: 1px solid var(--border);
+        }
+        .user-card {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            background: var(--bg-tertiary); border-radius: 10px;
+        }
+        .user-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--gradient-2); display: flex; align-items: center;
+            justify-content: center; font-weight: 600; font-size: 14px; color: white;
+        }
+        .user-info { flex: 1; }
+        .user-name { font-size: 13px; font-weight: 500; }
+        .user-email { font-size: 11px; color: var(--text-muted); }
+        
+        /* Main Content */
+        .main { flex: 1; display: flex; flex-direction: column; }
+        .topbar {
+            padding: 16px 32px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .breadcrumb span { color: var(--text-muted); }
+        .breadcrumb strong { color: var(--text-primary); }
+        .topbar-actions { display: flex; gap: 12px; }
+        
+        .content { flex: 1; padding: 32px; overflow-y: auto; }
+        .page-header { margin-bottom: 32px; }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .page-subtitle { color: var(--text-secondary); font-size: 15px; }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 24px;
+        }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .card-title { font-size: 16px; font-weight: 600; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: 8px; font-size: 14px;
+            font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: var(--accent-light); }
+        .btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-ghost { background: transparent; color: var(--text-secondary); }
+        .btn-ghost:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-lg { padding: 14px 28px; font-size: 15px; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+        
+        /* Form Elements */
+        .input-group { margin-bottom: 20px; }
+        .input-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-secondary); }
+        .input {
+            width: 100%; padding: 12px 16px; background: var(--bg-tertiary);
+            border: 1px solid var(--border); border-radius: 8px;
+            color: var(--text-primary); font-size: 14px; font-family: inherit;
+        }
+        .input:focus { outline: none; border-color: var(--accent); }
+        .input::placeholder { color: var(--text-muted); }
+        textarea.input { min-height: 120px; resize: vertical; }
+        
+        /* Grid */
+        .grid { display: grid; gap: 24px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        
+        /* Agent Cards */
+        .agent-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 24px; cursor: pointer;
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .agent-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .agent-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-1); opacity: 0; transition: opacity 0.3s;
+        }
+        .agent-card:hover::before { opacity: 1; }
+        .agent-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: var(--gradient-1); display: flex; align-items: center;
+            justify-content: center; margin-bottom: 16px; color: white;
+        }
+        .agent-name { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .agent-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+        .agent-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); }
+        .agent-meta span { display: flex; align-items: center; gap: 4px; }
+        .agent-status {
+            position: absolute; top: 16px; right: 16px;
+            width: 10px; height: 10px; border-radius: 50%; background: var(--success);
+        }
+        
+        /* Stats */
+        .stat-card { text-align: center; padding: 24px; }
+        .stat-value { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+        .stat-label { font-size: 13px; color: var(--text-secondary); }
+        .stat-change { font-size: 12px; color: var(--success); margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        
+        /* Voice Preview */
+        .voice-preview {
+            background: var(--bg-tertiary); border-radius: 16px;
+            padding: 32px; text-align: center;
+        }
+        .voice-visualizer {
+            height: 80px; background: var(--bg-card); border-radius: 12px;
+            margin-bottom: 24px; display: flex; align-items: center;
+            justify-content: center; gap: 4px;
+        }
+        .voice-bar {
+            width: 4px; background: var(--accent); border-radius: 2px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 35px; animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+        @keyframes pulse {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+        .call-btn {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: var(--success); border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: white; transition: all 0.2s;
+        }
+        .call-btn:hover { transform: scale(1.1); }
+        .call-btn.end { background: var(--error); }
+        
+        /* Transcript */
+        .transcript { max-height: 300px; overflow-y: auto; }
+        .message { display: flex; gap: 12px; margin-bottom: 16px; }
+        .message-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--bg-tertiary); display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0; color: var(--text-muted);
+        }
+        .message-avatar.agent { background: var(--gradient-1); color: white; }
+        .message-content { flex: 1; }
+        .message-sender { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+        .message-text { font-size: 14px; color: var(--text-secondary); }
+        
+        /* Knowledge Sources */
+        .source-item {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px; border-radius: 10px; background: var(--bg-tertiary);
+            margin-bottom: 12px;
+        }
+        .source-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--bg-card); display: flex; align-items: center;
+            justify-content: center; color: var(--text-secondary);
+        }
+        .source-info { flex: 1; }
+        .source-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .source-meta { font-size: 12px; color: var(--text-muted); }
+        .source-status { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .source-status.ready { background: rgba(34,197,94,0.15); color: var(--success); }
+        .source-status.indexing { background: rgba(245,158,11,0.15); color: var(--warning); }
+        
+        /* Tabs */
+        .tabs { display: flex; gap: 4px; margin-bottom: 24px; }
+        .tab {
+            padding: 10px 20px; border-radius: 8px; font-size: 14px;
+            color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+        }
+        .tab:hover { color: var(--text-primary); }
+        .tab.active { background: var(--bg-tertiary); color: var(--text-primary); }
+        
+        /* Modal */
+        .modal-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.7);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal {
+            background: var(--bg-secondary); border: 1px solid var(--border);
+            border-radius: 16px; width: 480px; max-height: 80%;
+            overflow: hidden;
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-close { 
+            width: 32px; height: 32px; border-radius: 8px;
+            background: var(--bg-tertiary); border: none; color: var(--text-secondary);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-body { padding: 24px; max-height: 400px; overflow-y: auto; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 12px; }
+        
+        /* Voice Selection */
+        .voice-option {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px; border-radius: 12px; cursor: pointer;
+            border: 2px solid transparent; margin-bottom: 8px;
+            transition: all 0.2s; background: var(--bg-tertiary);
+        }
+        .voice-option:hover { border-color: var(--border-light); }
+        .voice-option.selected { border-color: var(--accent); background: rgba(99,102,241,0.1); }
+        .voice-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--gradient-2); display: flex; align-items: center;
+            justify-content: center; color: white;
+        }
+        .voice-info { flex: 1; }
+        .voice-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .voice-desc { font-size: 12px; color: var(--text-muted); }
+        .voice-badge { 
+            padding: 4px 10px; border-radius: 20px; font-size: 11px;
+            background: var(--bg-card); color: var(--text-secondary);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .voice-check {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid var(--border); display: flex;
+            align-items: center; justify-content: center; color: white;
+        }
+        .voice-option.selected .voice-check { background: var(--success); border-color: var(--success); }
+        
+        /* Login Screen */
+        .login-screen {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 600px; background: var(--bg-primary);
+            background-image: 
+                radial-gradient(ellipse at top left, rgba(99,102,241,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(139,92,246,0.1) 0%, transparent 50%);
+        }
+        .login-card { width: 400px; }
+        .login-logo { text-align: center; margin-bottom: 32px; }
+        .login-logo .logo-icon { width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 14px; }
+        .login-logo .logo-text { font-size: 28px; }
+        .login-title { text-align: center; font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+        .login-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 32px; }
+        .divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .divider span { font-size: 12px; color: var(--text-muted); }
+        .oauth-btn {
+            width: 100%; padding: 14px; border-radius: 10px;
+            background: var(--bg-tertiary); border: 1px solid var(--border);
+            color: var(--text-primary); font-size: 14px; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 12px; margin-bottom: 12px;
+        }
+        .oauth-btn:hover { background: var(--bg-card); }
+        
+        /* Chart placeholder */
+        .chart-placeholder {
+            height: 200px; background: var(--bg-tertiary); border-radius: 12px;
+            display: flex; align-items: flex-end; justify-content: space-around; padding: 24px;
+        }
+        .chart-bar {
+            width: 24px; background: var(--gradient-1); border-radius: 4px 4px 0 0;
+        }
+        
+        /* Settings Grid */
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .setting-section { margin-bottom: 32px; }
+        .setting-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        
+        /* Slider */
+        .slider-container { display: flex; align-items: center; gap: 16px; }
+        .slider-track {
+            flex: 1; height: 6px; background: var(--bg-tertiary);
+            border-radius: 3px; position: relative;
+        }
+        .slider-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+        .slider-thumb {
+            position: absolute; top: 50%; right: 0; transform: translate(50%, -50%);
+            width: 18px; height: 18px; background: white; border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .slider-value { font-size: 13px; color: var(--text-secondary); min-width: 48px; text-align: right; }
+        
+        /* Select */
+        .select-wrapper { position: relative; }
+        .select {
+            width: 100%; padding: 12px 16px; padding-right: 40px;
+            background: var(--bg-tertiary); border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text-primary); font-size: 14px;
+            appearance: none; cursor: pointer;
+        }
+        .select-arrow {
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); pointer-events: none;
+        }
+        
+        /* Badge */
+        .badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 500;
+        }
+        .badge-success { background: rgba(34,197,94,0.15); color: var(--success); }
+        .badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+        .badge-error { background: rgba(239,68,68,0.15); color: var(--error); }
+        .badge-info { background: rgba(99,102,241,0.15); color: var(--accent); }
+        
+        /* Tool Card */
+        .tool-card {
+            background: var(--bg-tertiary); border-radius: 12px;
+            padding: 20px; margin-bottom: 16px;
+        }
+        .tool-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .tool-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--bg-card); display: flex; align-items: center;
+            justify-content: center; color: var(--text-secondary);
+        }
+        .tool-name { font-size: 15px; font-weight: 600; }
+        .tool-url { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+        .tool-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tool-action {
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 6px;
+            background: var(--bg-card); font-size: 12px;
+        }
+        .tool-action input { accent-color: var(--accent); }
+        
+        /* Empty state */
+        .empty-state { text-align: center; padding: 48px 24px; }
+        .empty-icon { margin-bottom: 16px; opacity: 0.5; color: var(--text-muted); }
+        .empty-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .empty-desc { color: var(--text-secondary); margin-bottom: 24px; }
+
+        /* Resource Box */
+        .resource-box {
+            flex: 1; padding: 16px; background: var(--bg-tertiary); 
+            border-radius: 10px; text-align: center;
+        }
+        .resource-box .icon-wrapper {
+            width: 48px; height: 48px; margin: 0 auto 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <nav class="wireframe-nav">
+        <h1>ELOQUA WIREFRAMES</h1>
+        <a href="#login" class="active">Login</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#agents">Agents</a>
+        <a href="#agent-detail">Agent Detail</a>
+        <a href="#knowledge">Knowledge</a>
+        <a href="#tools">Tools</a>
+        <a href="#settings">Settings</a>
+        <a href="#voice-modal">Voice Modal</a>
+    </nav>
+
+    <div class="screens">
+        <!-- 1. LOGIN SCREEN -->
+        <section class="screen" id="login">
+            <div class="screen-header">
+                <h2 class="screen-title">1. Login / Signup</h2>
+                <span class="screen-badge">Authentication Flow</span>
+            </div>
+            <div class="login-screen">
+                <div class="login-card card">
+                    <div class="login-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon-lg"></i>
+                        </div>
+                        <div class="logo-text">Eloqua</div>
+                    </div>
+                    <h2 class="login-title">Welcome back</h2>
+                    <p class="login-subtitle">Sign in to manage your voice agents</p>
+                    
+                    <button class="oauth-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        Continue with Google
+                    </button>
+                    <button class="oauth-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        Continue with GitHub
+                    </button>
+                    
+                    <div class="divider"><span>or continue with email</span></div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Email address</label>
+                        <input type="email" class="input" placeholder="you@company.com">
+                    </div>
+                    <button class="btn btn-primary btn-lg" style="width: 100%;">Send Magic Link</button>
+                    
+                    <p style="text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-muted);">
+                        Don't have an account? <a href="#" style="color: var(--accent);">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DASHBOARD -->
+        <section class="screen" id="dashboard">
+            <div class="screen-header">
+                <h2 class="screen-title">2. Dashboard Home</h2>
+                <span class="screen-badge">Overview & Analytics</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item active">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Agents</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Support Bot
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Sales Assistant
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Onboarding Guide
+                        </div>
+                        <div class="sidebar-item" style="color: var(--accent);">
+                            <i data-lucide="plus" class="icon"></i> New Agent
+                        </div>
+                        <div class="sidebar-label">Settings</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="building-2" class="icon"></i> Organization
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="key" class="icon"></i> API Keys
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="credit-card" class="icon"></i> Billing
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Home</span> / <strong>Dashboard</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> New Agent</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Dashboard</h1>
+                            <p class="page-subtitle">Overview of your voice AI platform</p>
+                        </div>
+                        
+                        <div class="grid grid-4" style="margin-bottom: 32px;">
+                            <div class="card stat-card">
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">Active Agents</div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-value">1,247</div>
+                                <div class="stat-label">Total Calls</div>
+                                <div class="stat-change"><i data-lucide="trending-up" class="icon-sm"></i> 12% this month</div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-value">24.3m</div>
+                                <div class="stat-label">Minutes Used</div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-value">$127.50</div>
+                                <div class="stat-label">This Month</div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Call Volume</h3>
+                                    <span style="font-size: 13px; color: var(--text-muted);">Last 30 days</span>
+                                </div>
+                                <div class="chart-placeholder">
+                                    <div class="chart-bar" style="height: 40%"></div>
+                                    <div class="chart-bar" style="height: 60%"></div>
+                                    <div class="chart-bar" style="height: 45%"></div>
+                                    <div class="chart-bar" style="height: 75%"></div>
+                                    <div class="chart-bar" style="height: 55%"></div>
+                                    <div class="chart-bar" style="height: 85%"></div>
+                                    <div class="chart-bar" style="height: 95%"></div>
+                                    <div class="chart-bar" style="height: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Recent Calls</h3>
+                                    <button class="btn btn-ghost btn-sm">View All <i data-lucide="arrow-right" class="icon-sm"></i></button>
+                                </div>
+                                <div class="source-item">
+                                    <div class="source-icon"><i data-lucide="phone" class="icon"></i></div>
+                                    <div class="source-info">
+                                        <div class="source-name">Support Bot - 3m 24s</div>
+                                        <div class="source-meta">2 minutes ago - Customer inquiry</div>
+                                    </div>
+                                    <span class="badge badge-success">Completed</span>
+                                </div>
+                                <div class="source-item">
+                                    <div class="source-icon"><i data-lucide="phone" class="icon"></i></div>
+                                    <div class="source-info">
+                                        <div class="source-name">Sales Assistant - 8m 12s</div>
+                                        <div class="source-meta">15 minutes ago - Product demo</div>
+                                    </div>
+                                    <span class="badge badge-success">Completed</span>
+                                </div>
+                                <div class="source-item">
+                                    <div class="source-icon"><i data-lucide="phone" class="icon"></i></div>
+                                    <div class="source-info">
+                                        <div class="source-name">Support Bot - 1m 45s</div>
+                                        <div class="source-meta">32 minutes ago - Technical support</div>
+                                    </div>
+                                    <span class="badge badge-warning">Transferred</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 3. AGENTS LIST -->
+        <section class="screen" id="agents">
+            <div class="screen-header">
+                <h2 class="screen-title">3. Agents List</h2>
+                <span class="screen-badge">Agent Management</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Agents</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Support Bot
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Sales Assistant
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bot" class="icon"></i> Onboarding Guide
+                        </div>
+                        <div class="sidebar-item active" style="color: var(--accent);">
+                            <i data-lucide="plus" class="icon"></i> New Agent
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Home</span> / <strong>Agents</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-secondary"><i data-lucide="upload" class="icon-sm"></i> Import</button>
+                            <button class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> New Agent</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Your Agents</h1>
+                            <p class="page-subtitle">Create and manage your voice AI agents</p>
+                        </div>
+                        
+                        <div class="grid grid-3">
+                            <div class="agent-card">
+                                <div class="agent-status"></div>
+                                <div class="agent-icon"><i data-lucide="headphones" class="icon-lg"></i></div>
+                                <h3 class="agent-name">Support Bot</h3>
+                                <p class="agent-desc">Handles customer inquiries and technical support tickets 24/7</p>
+                                <div class="agent-meta">
+                                    <span><i data-lucide="book-open" class="icon-sm"></i> 12 sources</span>
+                                    <span><i data-lucide="wrench" class="icon-sm"></i> 3 tools</span>
+                                    <span><i data-lucide="phone" class="icon-sm"></i> 847 calls</span>
+                                </div>
+                            </div>
+                            
+                            <div class="agent-card">
+                                <div class="agent-status"></div>
+                                <div class="agent-icon"><i data-lucide="briefcase" class="icon-lg"></i></div>
+                                <h3 class="agent-name">Sales Assistant</h3>
+                                <p class="agent-desc">Qualifies leads and schedules product demonstrations</p>
+                                <div class="agent-meta">
+                                    <span><i data-lucide="book-open" class="icon-sm"></i> 8 sources</span>
+                                    <span><i data-lucide="wrench" class="icon-sm"></i> 2 tools</span>
+                                    <span><i data-lucide="phone" class="icon-sm"></i> 312 calls</span>
+                                </div>
+                            </div>
+                            
+                            <div class="agent-card">
+                                <div class="agent-status"></div>
+                                <div class="agent-icon"><i data-lucide="graduation-cap" class="icon-lg"></i></div>
+                                <h3 class="agent-name">Onboarding Guide</h3>
+                                <p class="agent-desc">Walks new users through product setup and features</p>
+                                <div class="agent-meta">
+                                    <span><i data-lucide="book-open" class="icon-sm"></i> 5 sources</span>
+                                    <span><i data-lucide="wrench" class="icon-sm"></i> 1 tool</span>
+                                    <span><i data-lucide="phone" class="icon-sm"></i> 88 calls</span>
+                                </div>
+                            </div>
+                            
+                            <div class="agent-card" style="border-style: dashed; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                <div style="margin-bottom: 16px; opacity: 0.4; color: var(--text-muted);"><i data-lucide="plus" style="width: 48px; height: 48px;"></i></div>
+                                <h3 class="agent-name">Create New Agent</h3>
+                                <p class="agent-desc">Paste a URL or upload content to get started</p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 4. AGENT DETAIL (with Voice Preview) -->
+        <section class="screen" id="agent-detail">
+            <div class="screen-header">
+                <h2 class="screen-title">4. Agent Detail / Voice Preview</h2>
+                <span class="screen-badge">Agent Overview</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Support Bot</div>
+                        <div class="sidebar-item active">
+                            <i data-lucide="bar-chart-3" class="icon"></i> Overview
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="book-open" class="icon"></i> Knowledge
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="wrench" class="icon"></i> Tools
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="settings" class="icon"></i> Settings
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="phone" class="icon"></i> Call History
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="flask-conical" class="icon"></i> Testing
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Agents</span> / <strong>Support Bot</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-secondary"><i data-lucide="copy" class="icon-sm"></i> Duplicate</button>
+                            <button class="btn btn-success"><i data-lucide="phone" class="icon-sm"></i> Call Agent</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Support Bot</h1>
+                            <p class="page-subtitle">Handles customer inquiries and technical support</p>
+                        </div>
+                        
+                        <div class="grid grid-2" style="margin-bottom: 32px;">
+                            <div class="card">
+                                <h3 class="card-title" style="margin-bottom: 20px;">Voice Preview</h3>
+                                <div class="voice-preview">
+                                    <div class="voice-visualizer">
+                                        <div class="voice-bar"></div>
+                                        <div class="voice-bar"></div>
+                                        <div class="voice-bar"></div>
+                                        <div class="voice-bar"></div>
+                                        <div class="voice-bar"></div>
+                                    </div>
+                                    <button class="call-btn"><i data-lucide="phone" class="icon-lg"></i></button>
+                                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-secondary);">Click to start a test call</p>
+                                </div>
+                                <div class="transcript" style="margin-top: 24px;">
+                                    <div class="message">
+                                        <div class="message-avatar agent"><i data-lucide="bot" class="icon-sm"></i></div>
+                                        <div class="message-content">
+                                            <div class="message-sender">Support Bot</div>
+                                            <div class="message-text">Hi there! I'm the Support Bot. How can I help you today?</div>
+                                        </div>
+                                    </div>
+                                    <div class="message">
+                                        <div class="message-avatar"><i data-lucide="user" class="icon-sm"></i></div>
+                                        <div class="message-content">
+                                            <div class="message-sender">You</div>
+                                            <div class="message-text">I need help setting up my account integration.</div>
+                                        </div>
+                                    </div>
+                                    <div class="message">
+                                        <div class="message-avatar agent"><i data-lucide="bot" class="icon-sm"></i></div>
+                                        <div class="message-content">
+                                            <div class="message-sender">Support Bot</div>
+                                            <div class="message-text">Of course! I can help you with that. Which integration are you trying to set up - Slack, Jira, or another service?</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 24px;">
+                                <div class="card">
+                                    <h3 class="card-title" style="margin-bottom: 20px;">Quick Stats</h3>
+                                    <div class="grid grid-2">
+                                        <div class="stat-card" style="padding: 16px; background: var(--bg-tertiary); border-radius: 10px;">
+                                            <div class="stat-value" style="font-size: 24px;">847</div>
+                                            <div class="stat-label">Total Calls</div>
+                                        </div>
+                                        <div class="stat-card" style="padding: 16px; background: var(--bg-tertiary); border-radius: 10px;">
+                                            <div class="stat-value" style="font-size: 24px;">4.2m</div>
+                                            <div class="stat-label">Avg Duration</div>
+                                        </div>
+                                        <div class="stat-card" style="padding: 16px; background: var(--bg-tertiary); border-radius: 10px;">
+                                            <div class="stat-value" style="font-size: 24px;">92%</div>
+                                            <div class="stat-label">Resolution Rate</div>
+                                        </div>
+                                        <div class="stat-card" style="padding: 16px; background: var(--bg-tertiary); border-radius: 10px;">
+                                            <div class="stat-value" style="font-size: 24px;">4.8</div>
+                                            <div class="stat-label">CSAT Score</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Resources</h3>
+                                    </div>
+                                    <div style="display: flex; gap: 16px;">
+                                        <div class="resource-box">
+                                            <div class="icon-wrapper"><i data-lucide="book-open" class="icon-xl"></i></div>
+                                            <div style="font-size: 20px; font-weight: 600;">12</div>
+                                            <div style="font-size: 12px; color: var(--text-muted);">Knowledge Sources</div>
+                                        </div>
+                                        <div class="resource-box">
+                                            <div class="icon-wrapper"><i data-lucide="wrench" class="icon-xl"></i></div>
+                                            <div style="font-size: 20px; font-weight: 600;">3</div>
+                                            <div style="font-size: 12px; color: var(--text-muted);">Connected Tools</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Quick Settings</h3>
+                                        <button class="btn btn-ghost btn-sm">All Settings <i data-lucide="arrow-right" class="icon-sm"></i></button>
+                                    </div>
+                                    <div class="source-item" style="margin-bottom: 8px;">
+                                        <div class="source-info">
+                                            <div class="source-name">Voice</div>
+                                            <div class="source-meta">Aria - British English</div>
+                                        </div>
+                                        <button class="btn btn-ghost btn-sm">Change</button>
+                                    </div>
+                                    <div class="source-item">
+                                        <div class="source-info">
+                                            <div class="source-name">Greeting</div>
+                                            <div class="source-meta">"Hi there! I'm the Support Bot..."</div>
+                                        </div>
+                                        <button class="btn btn-ghost btn-sm">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 5. KNOWLEDGE SOURCES -->
+        <section class="screen" id="knowledge">
+            <div class="screen-header">
+                <h2 class="screen-title">5. Knowledge Sources</h2>
+                <span class="screen-badge">Content Management</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Support Bot</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bar-chart-3" class="icon"></i> Overview
+                        </div>
+                        <div class="sidebar-item active">
+                            <i data-lucide="book-open" class="icon"></i> Knowledge
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="wrench" class="icon"></i> Tools
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="settings" class="icon"></i> Settings
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Support Bot</span> / <strong>Knowledge Sources</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> Add Source</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Knowledge Sources</h1>
+                            <p class="page-subtitle">Content your agent uses to answer questions</p>
+                        </div>
+                        
+                        <div class="tabs">
+                            <div class="tab active">All Sources (12)</div>
+                            <div class="tab">URLs (5)</div>
+                            <div class="tab">Documents (4)</div>
+                            <div class="tab">Text (3)</div>
+                        </div>
+                        
+                        <div class="card" style="margin-bottom: 24px; border-style: dashed; text-align: center; padding: 40px;">
+                            <h3 style="margin-bottom: 8px;">Add Knowledge Source</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 24px;">Paste a URL, upload documents, or add text directly</p>
+                            <div style="display: flex; justify-content: center; gap: 16px;">
+                                <button class="btn btn-secondary"><i data-lucide="globe" class="icon-sm"></i> Add URL</button>
+                                <button class="btn btn-secondary"><i data-lucide="file-up" class="icon-sm"></i> Upload Files</button>
+                                <button class="btn btn-secondary"><i data-lucide="text" class="icon-sm"></i> Add Text</button>
+                                <button class="btn btn-secondary"><i data-lucide="database" class="icon-sm"></i> Connect DB</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="globe" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">docs.acme.com/api</div>
+                                    <div class="source-meta">API Documentation - 47 pages - Last synced 2h ago</div>
+                                </div>
+                                <span class="source-status ready"><i data-lucide="check" class="icon-sm"></i> Ready</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="globe" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">help.acme.com</div>
+                                    <div class="source-meta">Help Center - 123 articles - Last synced 1d ago</div>
+                                </div>
+                                <span class="source-status ready"><i data-lucide="check" class="icon-sm"></i> Ready</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="file-text" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">Product-Guide-2024.pdf</div>
+                                    <div class="source-meta">PDF - 2.4 MB - 156 pages</div>
+                                </div>
+                                <span class="source-status ready"><i data-lucide="check" class="icon-sm"></i> Ready</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="file-text" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">FAQ-Sheet.md</div>
+                                    <div class="source-meta">Markdown - 24 KB</div>
+                                </div>
+                                <span class="source-status ready"><i data-lucide="check" class="icon-sm"></i> Ready</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="globe" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">blog.acme.com/changelog</div>
+                                    <div class="source-meta">Blog Changelog - Indexing 34 of 89 pages...</div>
+                                </div>
+                                <span class="source-status indexing"><i data-lucide="loader-2" class="icon-sm"></i> Indexing</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-icon"><i data-lucide="text" class="icon"></i></div>
+                                <div class="source-info">
+                                    <div class="source-name">Custom Pricing Rules</div>
+                                    <div class="source-meta">Text snippet - 1.2 KB</div>
+                                </div>
+                                <span class="source-status ready"><i data-lucide="check" class="icon-sm"></i> Ready</span>
+                                <button class="btn btn-ghost btn-sm"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 6. MCP TOOLS -->
+        <section class="screen" id="tools">
+            <div class="screen-header">
+                <h2 class="screen-title">6. MCP Tools</h2>
+                <span class="screen-badge">Tool Integrations</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Support Bot</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bar-chart-3" class="icon"></i> Overview
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="book-open" class="icon"></i> Knowledge
+                        </div>
+                        <div class="sidebar-item active">
+                            <i data-lucide="wrench" class="icon"></i> Tools
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="settings" class="icon"></i> Settings
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Support Bot</span> / <strong>Tools</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> Connect Tool</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Connected Tools</h1>
+                            <p class="page-subtitle">MCP tools your agent can use to take actions</p>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon"><i data-lucide="ticket" class="icon"></i></div>
+                                <div>
+                                    <div class="tool-name">Jira Cloud</div>
+                                    <div class="tool-url">https://acme.atlassian.net/mcp</div>
+                                </div>
+                                <span class="badge badge-success" style="margin-left: auto;">Connected</span>
+                                <button class="btn btn-ghost btn-sm" style="margin-left: 8px;"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="tool-actions">
+                                <label class="tool-action"><input type="checkbox" checked> create_issue</label>
+                                <label class="tool-action"><input type="checkbox" checked> search_issues</label>
+                                <label class="tool-action"><input type="checkbox" checked> get_issue</label>
+                                <label class="tool-action"><input type="checkbox"> update_issue</label>
+                                <label class="tool-action"><input type="checkbox"> add_comment</label>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon"><i data-lucide="message-square" class="icon"></i></div>
+                                <div>
+                                    <div class="tool-name">Slack</div>
+                                    <div class="tool-url">https://api.slack.com/mcp</div>
+                                </div>
+                                <span class="badge badge-success" style="margin-left: auto;">Connected</span>
+                                <button class="btn btn-ghost btn-sm" style="margin-left: 8px;"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="tool-actions">
+                                <label class="tool-action"><input type="checkbox" checked> send_message</label>
+                                <label class="tool-action"><input type="checkbox"> create_channel</label>
+                                <label class="tool-action"><input type="checkbox" checked> lookup_user</label>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon"><i data-lucide="shopping-cart" class="icon"></i></div>
+                                <div>
+                                    <div class="tool-name">Custom API - Order System</div>
+                                    <div class="tool-url">https://api.acme.com/orders/mcp</div>
+                                </div>
+                                <span class="badge badge-success" style="margin-left: auto;">Connected</span>
+                                <button class="btn btn-ghost btn-sm" style="margin-left: 8px;"><i data-lucide="more-vertical" class="icon-sm"></i></button>
+                            </div>
+                            <div class="tool-actions">
+                                <label class="tool-action"><input type="checkbox" checked> lookup_order</label>
+                                <label class="tool-action"><input type="checkbox" checked> get_order_status</label>
+                                <label class="tool-action"><input type="checkbox" checked> cancel_order</label>
+                                <label class="tool-action"><input type="checkbox"> refund_order</label>
+                            </div>
+                        </div>
+                        
+                        <div class="card" style="border-style: dashed; text-align: center; padding: 40px;">
+                            <h3 style="margin-bottom: 8px;">Connect More Tools</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 24px;">Add MCP-compatible tools to extend your agent's capabilities</p>
+                            <button class="btn btn-secondary"><i data-lucide="plus" class="icon-sm"></i> Add MCP Server</button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 7. AGENT SETTINGS -->
+        <section class="screen" id="settings">
+            <div class="screen-header">
+                <h2 class="screen-title">7. Agent Settings</h2>
+                <span class="screen-badge">Voice & Model Configuration</span>
+            </div>
+            <div class="screen-content">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item">
+                            <i data-lucide="layout-dashboard" class="icon"></i> Dashboard
+                        </div>
+                        <div class="sidebar-label">Support Bot</div>
+                        <div class="sidebar-item">
+                            <i data-lucide="bar-chart-3" class="icon"></i> Overview
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="book-open" class="icon"></i> Knowledge
+                        </div>
+                        <div class="sidebar-item">
+                            <i data-lucide="wrench" class="icon"></i> Tools
+                        </div>
+                        <div class="sidebar-item active">
+                            <i data-lucide="settings" class="icon"></i> Settings
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="user-card">
+                            <div class="user-avatar">JD</div>
+                            <div class="user-info">
+                                <div class="user-name">John Doe</div>
+                                <div class="user-email">john@acme.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="main">
+                    <div class="topbar">
+                        <div class="breadcrumb">
+                            <span>Support Bot</span> / <strong>Settings</strong>
+                        </div>
+                        <div class="topbar-actions">
+                            <button class="btn btn-secondary"><i data-lucide="rotate-ccw" class="icon-sm"></i> Reset to Defaults</button>
+                            <button class="btn btn-primary"><i data-lucide="save" class="icon-sm"></i> Save Changes</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="page-header">
+                            <h1 class="page-title">Agent Settings</h1>
+                            <p class="page-subtitle">Configure voice, model, and behavior settings</p>
+                        </div>
+                        
+                        <div class="tabs">
+                            <div class="tab active">Voice</div>
+                            <div class="tab">Speech Recognition</div>
+                            <div class="tab">LLM</div>
+                            <div class="tab">Messages</div>
+                            <div class="tab">Advanced</div>
+                        </div>
+                        
+                        <div class="settings-grid">
+                            <div class="card">
+                                <div class="setting-section">
+                                    <h3 class="setting-title"><i data-lucide="mic" class="icon"></i> Text-to-Speech</h3>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Provider</label>
+                                        <div class="select-wrapper">
+                                            <select class="select">
+                                                <option>Cartesia</option>
+                                                <option>ElevenLabs</option>
+                                                <option>Deepgram</option>
+                                                <option>OpenAI</option>
+                                            </select>
+                                            <span class="select-arrow"><i data-lucide="chevron-down" class="icon-sm"></i></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Voice</label>
+                                        <div style="display: flex; gap: 12px; align-items: center;">
+                                            <div style="flex: 1; padding: 12px 16px; background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; gap: 12px;">
+                                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white;"><i data-lucide="user" class="icon-sm"></i></div>
+                                                <div>
+                                                    <div style="font-size: 14px; font-weight: 500;">Aria</div>
+                                                    <div style="font-size: 12px; color: var(--text-muted);">British English - Professional</div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-secondary">Change</button>
+                                            <button class="btn btn-ghost"><i data-lucide="play" class="icon-sm"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Speed</label>
+                                        <div class="slider-container">
+                                            <div class="slider-track">
+                                                <div class="slider-fill" style="width: 60%"></div>
+                                                <div class="slider-thumb" style="left: 60%"></div>
+                                            </div>
+                                            <span class="slider-value">1.2x</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Emotion</label>
+                                        <div class="select-wrapper">
+                                            <select class="select">
+                                                <option>Neutral</option>
+                                                <option>Friendly</option>
+                                                <option>Professional</option>
+                                                <option>Empathetic</option>
+                                            </select>
+                                            <span class="select-arrow"><i data-lucide="chevron-down" class="icon-sm"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="setting-section">
+                                    <h3 class="setting-title"><i data-lucide="volume-2" class="icon"></i> Voice Activity Detection</h3>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Silence Threshold</label>
+                                        <div class="slider-container">
+                                            <div class="slider-track">
+                                                <div class="slider-fill" style="width: 40%"></div>
+                                                <div class="slider-thumb" style="left: 40%"></div>
+                                            </div>
+                                            <span class="slider-value">400ms</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Speech Detection Sensitivity</label>
+                                        <div class="slider-container">
+                                            <div class="slider-track">
+                                                <div class="slider-fill" style="width: 70%"></div>
+                                                <div class="slider-thumb" style="left: 70%"></div>
+                                            </div>
+                                            <span class="slider-value">0.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Interruption Sensitivity</label>
+                                        <div class="slider-container">
+                                            <div class="slider-track">
+                                                <div class="slider-fill" style="width: 50%"></div>
+                                                <div class="slider-thumb" style="left: 50%"></div>
+                                            </div>
+                                            <span class="slider-value">0.5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="setting-section">
+                                    <h3 class="setting-title"><i data-lucide="message-circle" class="icon"></i> Agent Messages</h3>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Greeting Message</label>
+                                        <textarea class="input" placeholder="Hi there! I'm your Support Bot...">Hi there! I'm your Support Bot. How can I help you today?</textarea>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Error Message</label>
+                                        <input type="text" class="input" value="I'm sorry, I didn't quite catch that. Could you please repeat?">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- 8. VOICE SELECTION MODAL -->
+        <section class="screen" id="voice-modal">
+            <div class="screen-header">
+                <h2 class="screen-title">8. Voice Selection Modal</h2>
+                <span class="screen-badge">Voice Picker</span>
+            </div>
+            <div class="screen-content" style="position: relative;">
+                <aside class="sidebar" style="opacity: 0.3;">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                </aside>
+                <main class="main" style="opacity: 0.3;">
+                    <div class="content"></div>
+                </main>
+                
+                <div class="modal-overlay">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Select Voice</h2>
+                            <button class="modal-close"><i data-lucide="x" class="icon-sm"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group" style="margin-bottom: 16px;">
+                                <input type="text" class="input" placeholder="Search voices...">
+                            </div>
+                            
+                            <div class="tabs" style="margin-bottom: 16px;">
+                                <div class="tab active">All</div>
+                                <div class="tab">British</div>
+                                <div class="tab">American</div>
+                                <div class="tab">Multilingual</div>
+                            </div>
+                            
+                            <div class="voice-option">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">James</div>
+                                    <div class="voice-desc">Professional, confident tone</div>
+                                </div>
+                                <span class="voice-badge">British</span>
+                                <div class="voice-check"></div>
+                            </div>
+                            
+                            <div class="voice-option">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">Matt</div>
+                                    <div class="voice-desc">Warm, friendly voice</div>
+                                </div>
+                                <span class="voice-badge">British</span>
+                                <div class="voice-check"></div>
+                            </div>
+                            
+                            <div class="voice-option selected">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">Aria</div>
+                                    <div class="voice-desc">Clear, professional female voice</div>
+                                </div>
+                                <span class="voice-badge">British</span>
+                                <div class="voice-check"><i data-lucide="check" class="icon-sm"></i></div>
+                            </div>
+                            
+                            <div class="voice-option">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">Olivia</div>
+                                    <div class="voice-desc">Energetic, upbeat tone</div>
+                                </div>
+                                <span class="voice-badge">British</span>
+                                <div class="voice-check"></div>
+                            </div>
+                            
+                            <div class="voice-option">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">Sophie</div>
+                                    <div class="voice-desc">Neutral accent, good for numbers</div>
+                                </div>
+                                <span class="voice-badge">Multilingual</span>
+                                <div class="voice-check"></div>
+                            </div>
+                            
+                            <div class="voice-option">
+                                <div class="voice-avatar"><i data-lucide="user" class="icon"></i></div>
+                                <div class="voice-info">
+                                    <div class="voice-name">Ben</div>
+                                    <div class="voice-desc">Deep, authoritative voice</div>
+                                </div>
+                                <span class="voice-badge">Multilingual</span>
+                                <div class="voice-check"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. CREATE AGENT MODAL -->
+        <section class="screen" id="create-agent">
+            <div class="screen-header">
+                <h2 class="screen-title">9. Create Agent Flow</h2>
+                <span class="screen-badge">Quick Start</span>
+            </div>
+            <div class="screen-content" style="position: relative;">
+                <aside class="sidebar" style="opacity: 0.3;">
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="audio-waveform" class="icon"></i>
+                        </div>
+                        <span class="logo-text">Eloqua</span>
+                    </div>
+                </aside>
+                <main class="main" style="opacity: 0.3;">
+                    <div class="content"></div>
+                </main>
+                
+                <div class="modal-overlay">
+                    <div class="modal" style="width: 520px;">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Create New Agent</h2>
+                            <button class="modal-close"><i data-lucide="x" class="icon-sm"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <label class="input-label">Agent Name</label>
+                                <input type="text" class="input" placeholder="e.g., Support Bot, Sales Assistant...">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Description (optional)</label>
+                                <textarea class="input" rows="2" placeholder="What does this agent do?"></textarea>
+                            </div>
+                            
+                            <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 20px; margin-top: 24px;">
+                                <h4 style="font-size: 14px; margin-bottom: 12px;">Quick Start (Optional)</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Add content now or later. Paste a URL to automatically index your documentation.</p>
+                                
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <input type="text" class="input" placeholder="https://docs.yoursite.com">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Create Agent <i data-lucide="arrow-right" class="icon-sm"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Simple navigation highlighting
+        document.querySelectorAll('.wireframe-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('.wireframe-nav a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
